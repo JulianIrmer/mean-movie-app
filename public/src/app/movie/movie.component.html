@@ -1,0 +1,24 @@
+
+<div class="jumbotron" ng-controller="controller">
+    <label for="searchabr"><h1>FIND MOVIES</h1></label>
+    <input type="text" #input class="form-control" (keyup.enter)="userInput(input.value)">
+</div>
+
+
+<!-- When changing innerHTML change if-statements in movie.components.ts -->
+<button class="filter-btn btn-primary" (click)="sort(name.innerHTML)" #name>Name</button>
+<button class="filter-btn btn-primary" (click)="sort(year.innerHTML)" #year>Year</button>
+<button class="filter-btn btn-primary" (click)="sort(rating.innerHTML)" #rating>Rating</button>
+
+<li *ngFor="let movie of cleanResults" onclick="expand()" class="list-group-item" id="clickable">
+  <h3> <a class="imdb-link" target="_blank" rel="noopener" href="{{movie.url}}">{{ movie.title }}</a> ({{ movie.year }})</h3> <p> imdb: {{ movie.rating }}</p>
+ 
+  <ul class="info-ul">
+    <li>{{ movie.text }}</li>
+    <br>
+    <li> <strong>Director: </strong> {{ movie.director }}</li>
+    <li> <strong>Stars: </strong>{{ movie.stars }}</li>
+    <!-- <li> {{ movie.seen }}</li> -->
+  </ul>
+</li>
+
