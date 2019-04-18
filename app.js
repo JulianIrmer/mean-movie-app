@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongojs = require('mongojs');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 let scArray = [];
@@ -15,7 +15,7 @@ const app = express();
 //middelware
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser());
+// app.use(bodyParser());
 
 //connect to mLab
 const dbURL = 'mongodb://moviedb:lala1234@ds123614.mlab.com:23614/hollydb';
@@ -33,6 +33,22 @@ app.get('/api/getdata', (req, res) => {
   });
 });
 
+app.get('/api/getquerie', (req, res) =>{
+  db.movies.find();
+
+  if(err){
+    console.error(err);
+  }
+  else if(docs.length == 0){
+    console.error('No data found for that query');
+    res.json('NO DATA');
+  }
+  else{
+    console.log(`Getting all(${docs.length}) entries from mLab!`);
+    res.json(docs);
+  }
+});
+
 app.post('/api/postdata', (req, res) => {
   const data = req.body.params;
   console.log(data);
@@ -42,6 +58,7 @@ app.post('/api/postdata', (req, res) => {
 // ##############################
 // GET DATA FROM IMDB.com and save it in a mongo database
 // scrape();
+
 function scrape(){
   let name;
   let year;
